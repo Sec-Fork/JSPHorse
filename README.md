@@ -8,6 +8,22 @@
 
 一个JSP免杀Webshell生成器，目前仅支持普通回显Webshell，后续可能支持冰蝎等，核心技术为Java的AST库JavaParser
 
+```txt
+　　 へ　　　　　／|
+　　/＼7　　　 ∠＿/
+　 /　│　　 ／　／
+　│　Z ＿,＜　／　　 /`ヽ
+　│　　　　　ヽ　　 /　　〉
+　 Y　　　　　`　 /　　/
+　?●　?　●　　??〈　　/
+　()　 へ　　　　|　＼〈
+　　>? ?_　 ィ　 │ ／／
+　 / へ　　 /　?＜| ＼＼
+　 ヽ_?　　(_／　 │／／
+　　7　　　　　　　|／
+　　＞―r￣￣~∠--|
+```
+
 特点：
 
 - Java反射调用
@@ -19,7 +35,14 @@
 - 每次执行都会生成完全不同的马
 - 集成木头神提供的ScriptEngine调用JS免杀（未测试）
 
-简单测试了免杀效果：百度WEBDIR+; SHELLPUB; WINDOWS DEFENDER
+简单测试了免杀效果：
+
+| 名称 | 测试结果 |
+| :----: | :----: |
+| 百度WEBDIR+ | ![](https://img.shields.io/badge/pass-green) |
+| 河马SHELLPUB | ![](https://img.shields.io/badge/pass-green) |
+| Windows Defender | ![](https://img.shields.io/badge/pass-green) |
+| 长亭WebshellChop | ![](https://img.shields.io/badge/pass-green) |
 
 ## Quick Start
 
