@@ -14,4 +14,7 @@ public class Command {
 
     @Parameter(names = {"-j","--javascript"},description = "Use JavaScript Engine")
     public boolean javascript;
+
+    @Parameter(names = {"--super"}, description = "Use Super Module")
+    public boolean superModule;
 }

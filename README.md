@@ -33,6 +33,7 @@
 - 所有标识符全部替换为随机字符串
 - 支持全局Unicode编码
 - 每次执行都会生成完全不同的马
+- 支持Javac动态编译class的JSP Webshell
 - 集成木头神提供的ScriptEngine调用JS免杀（未测试）
 
 简单测试了免杀效果：
@@ -55,6 +56,8 @@
 全局Unicode编码（JSP支持全局Unicode编码）
 
 `java -jar JSPHorse.jar -p your_password -u`
+
+生成超级版Webshell（Javac动态编译class）
 
 使用木头神提供的JS免杀（未测试）
 

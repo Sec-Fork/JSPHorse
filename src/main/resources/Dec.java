@@ -24,7 +24,10 @@ public class Dec {
                 }
                 str1.append(c);
             }
-            return str1.toString();
+            String result = str1.toString();
+            result = result.replace("\\\"","\"");
+            result = result.replace("\\n","\n");
+            return result;
         } catch (Exception ignored) {
             return "";
         }

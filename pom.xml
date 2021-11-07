@@ -6,7 +6,7 @@
 
     <groupId>org.sec</groupId>
     <artifactId>JSPHorse</artifactId>
-    <version>1.0</version>
+    <version>0.2</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

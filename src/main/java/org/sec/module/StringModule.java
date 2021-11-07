@@ -17,7 +17,9 @@ public class StringModule {
         for (StringLiteralExpr s : stringList) {
             if (s.getParentNode().isPresent()) {
                 if (s.getParentNode().get() instanceof ArrayInitializerExpr) {
-                    s.setValue(EncodeUtil.encryption(s.getValue(), offset));
+                    String encode = EncodeUtil.encryption(s.getValue(), offset);
+                    encode = encode.replace(System.getProperty("line.separator"),"");
+                    s.setValue(encode);
                 }
             }
         }
