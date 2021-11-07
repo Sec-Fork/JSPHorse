@@ -59,6 +59,8 @@
 
 生成超级版Webshell（Javac动态编译class）
 
+`java -jar JSPHorse.jar -p your_password --super`
+
 使用木头神提供的JS免杀（未测试）
 
 `java -jar JSPHorse.jar -p your_password -j`
