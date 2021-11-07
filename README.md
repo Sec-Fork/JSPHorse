@@ -43,7 +43,6 @@
 | 百度WEBDIR+ | ![](https://img.shields.io/badge/pass-green) |
 | 河马SHELLPUB | ![](https://img.shields.io/badge/pass-green) |
 | Windows Defender | ![](https://img.shields.io/badge/pass-green) |
-| 长亭WebshellChop | ![](https://img.shields.io/badge/pass-green) |
 
 ## Quick Start
 
