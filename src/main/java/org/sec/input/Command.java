@@ -12,7 +12,7 @@ public class Command {
     @Parameter(names = {"-u", "--unicode"}, description = "Use Unicode")
     public boolean unicode;
 
-    @Parameter(names = {"-j","--javascript"},description = "Use JavaScript Engine")
+    @Parameter(names = {"--js"},description = "Use JavaScript Engine")
     public boolean javascript;
 
     @Parameter(names = {"--super"}, description = "Use Super Module")

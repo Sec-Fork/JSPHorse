@@ -33,10 +33,26 @@ public class Main {
         boolean useUnicode = command.unicode;
 
         if (command.javascript) {
-            InputStream in = Main.class.getClassLoader().getResourceAsStream("JS.java");
-            String code = FileUtil.readFile(in);
-            code = code.replace("__PASSWORD__", password);
-            FileUtil.writeFile("result.jsp", code);
+            MethodDeclaration jsMethod = getMethod("JS.java");
+            MethodDeclaration decMethod = getMethod("Dec.java");
+            if(jsMethod == null || decMethod == null){
+                return;
+            }
+            String newValue = SwitchModule.shuffle(jsMethod);
+            SwitchModule.changeSwitch(jsMethod, newValue);
+            int offset = StringModule.encodeString(jsMethod);
+            StringModule.changeRef(jsMethod, offset);
+            IdentifyModule.doIdentify(jsMethod);
+            XORModule.doXOR(jsMethod);
+            XORModule.doXOR(jsMethod);
+
+            int decOffset = StringModule.encodeString(decMethod);
+            StringModule.changeRef(decMethod, decOffset);
+            IdentifyModule.doIdentify(decMethod);
+            XORModule.doXOR(decMethod);
+
+            WriteUtil.write(jsMethod, decMethod, password, useUnicode);
+            System.out.println("Finish!");
             return;
         }
 
