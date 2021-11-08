@@ -1,25 +1,37 @@
 package org.sec.module;
 
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.ArrayInitializerExpr;
 import com.github.javaparser.ast.expr.IntegerLiteralExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.stmt.SwitchEntry;
+import com.github.javaparser.ast.stmt.SwitchStmt;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class SwitchModule {
-    public static void changeSwitch(MethodDeclaration method,String target) {
+    public static void changeSwitch(MethodDeclaration method, String target) {
         String[] a = target.split("\\|");
+        SwitchStmt stmt = method.findFirst(SwitchStmt.class).isPresent() ?
+                method.findFirst(SwitchStmt.class).get() : null;
+        if(stmt==null){
+            return;
+        }
         List<SwitchEntry> entryList = method.findAll(SwitchEntry.class);
-        for (int i=0;i<entryList.size();i++) {
-            if(entryList.get(i).getLabels().get(0) instanceof IntegerLiteralExpr){
+        for (int i = 0; i < entryList.size(); i++) {
+            if (entryList.get(i).getLabels().get(0) instanceof IntegerLiteralExpr) {
                 IntegerLiteralExpr expr = (IntegerLiteralExpr) entryList.get(i).getLabels().get(0);
                 expr.setValue(a[i]);
             }
         }
+        NodeList<SwitchEntry> switchEntries = new NodeList<>();
+        Collections.shuffle(entryList);
+        switchEntries.addAll(entryList);
+        stmt.setEntries(switchEntries);
     }
 
     public static String shuffle(MethodDeclaration method) {

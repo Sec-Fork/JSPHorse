@@ -12,13 +12,13 @@ public class StringModule {
     public static int encodeString(MethodDeclaration method) {
         Random random = new Random();
         random.setSeed(System.currentTimeMillis());
-        int offset = random.nextInt(10);
+        int offset = random.nextInt(9) + 1;
         List<StringLiteralExpr> stringList = method.findAll(StringLiteralExpr.class);
         for (StringLiteralExpr s : stringList) {
             if (s.getParentNode().isPresent()) {
                 if (s.getParentNode().get() instanceof ArrayInitializerExpr) {
                     String encode = EncodeUtil.encryption(s.getValue(), offset);
-                    encode = encode.replace(System.getProperty("line.separator"),"");
+                    encode = encode.replace(System.getProperty("line.separator"), "");
                     s.setValue(encode);
                 }
             }
