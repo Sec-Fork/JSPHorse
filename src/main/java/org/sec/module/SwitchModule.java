@@ -18,7 +18,7 @@ public class SwitchModule {
         String[] a = target.split("\\|");
         SwitchStmt stmt = method.findFirst(SwitchStmt.class).isPresent() ?
                 method.findFirst(SwitchStmt.class).get() : null;
-        if(stmt==null){
+        if (stmt == null) {
             return;
         }
         List<SwitchEntry> entryList = method.findAll(SwitchEntry.class);

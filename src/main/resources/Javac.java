@@ -10,6 +10,9 @@ import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.Random;
 
+/**
+ * Javac动态编译免杀
+ */
 public class Javac {
     public static void main(String[] args) {
         try {

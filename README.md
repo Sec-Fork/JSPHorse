@@ -6,7 +6,7 @@
 
 ## 简介
 
-一个JSP免杀Webshell生成器，目前仅支持普通回显Webshell，后续可能支持冰蝎等，核心技术为Java的AST库JavaParser
+一个JSP免杀Webshell生成器，目前仅支持普通回显Webshell，后续可能支持冰蝎等
 
 ```txt
 　　 へ　　　　　／|
@@ -75,7 +75,7 @@
 
 如何使用？
 
-http://xxx/1.jsp?pwd=your_password&cmd=calc.exe
+1.jsp?pwd=your_password&cmd=calc.exe
 
 生成JSP大致代码如下：
 

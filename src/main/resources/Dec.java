@@ -1,7 +1,7 @@
 package org.sec.util;
 
 /**
- * 需要写入JSP的揭解密方法
+ * 需要写入JSP的解密方法
  */
 public class Dec {
     public static String dec(String str, int offset) {
