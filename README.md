@@ -56,9 +56,13 @@
 
 `java -jar JSPHorse.jar -p your_password -u`
 
-生成超级版Webshell（Javac动态编译class）
+生成进阶版Webshell（Javac动态编译class）
 
 `java -jar JSPHorse.jar -p your_password --super`
+
+进阶版Webshell基础上全局Unicode编码
+
+`java -jar JSPHorse.jar -p your_password --super -u`
 
 使用木头神提供的JS免杀（未测试）
 
