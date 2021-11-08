@@ -6,9 +6,9 @@
 
 ## 简介
 
-一个JSP免杀Webshell生成器，目前仅做了普通回显Webshell：`1.jsp?pwd=xxx&cmd=whoami`
+一个JSP免杀Webshell生成器，支持普通回显Webshell：`1.jsp?pwd=xxx&cmd=whoami`
 
-后续可能支持其他Webshell，例如蚁剑冰蝎等
+**已完成蚁剑免杀Webshell**!
 
 ```txt
 　　 へ　　　　　／|
@@ -38,6 +38,7 @@
 - 所有标识符全部替换为随机字符串
 - 支持全局Unicode编码
 - 每次执行都会生成完全不同的马（结构相同内容不同）
+- 已完成蚁剑免杀马！
 
 简单测试了免杀效果：
 
@@ -51,9 +52,13 @@
 
 在Github右侧Release页面下载
 
-生成标准形式Webshell
+生成标准形式基础Webshell
 
 `java -jar JSPHorse.jar -p your_password`
+
+生成蚁剑的免杀Webshell
+
+`java -jar JSPHorse.jar -p your_password --ant`
 
 全局Unicode编码（JSP支持全局Unicode编码）
 

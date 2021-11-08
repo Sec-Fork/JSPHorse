@@ -17,4 +17,7 @@ public class Command {
 
     @Parameter(names = {"--super"}, description = "Use Super Module")
     public boolean superModule;
+
+    @Parameter(names = {"--ant"},description = "Use Ant Sword")
+    public boolean antSword;
 }

