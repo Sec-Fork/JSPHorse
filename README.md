@@ -6,7 +6,9 @@
 
 ## 简介
 
-一个JSP免杀Webshell生成器，目前仅支持普通回显Webshell，后续可能支持冰蝎等
+一个JSP免杀Webshell生成器，目前仅做了普通回显Webshell：`1.jsp?pwd=xxx&cmd=whoami`
+
+后续可能支持其他Webshell，例如蚁剑冰蝎等
 
 ```txt
 　　 へ　　　　　／|
