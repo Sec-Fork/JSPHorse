@@ -34,7 +34,7 @@
 - 支持全局Unicode编码
 - 每次执行都会生成完全不同的马（结构相同内容不同）
 - 参考三梦师傅代码完成Javac动态编译class进一步免杀
-- 集成KpLi0rn师傅提供的ScriptEngine免杀（未测试）
+- 正在编写ScriptEngine调用JS免杀（即将完成）
 
 简单测试了免杀效果：
 
