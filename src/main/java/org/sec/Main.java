@@ -7,7 +7,6 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.ArrayInitializerExpr;
-import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.sec.input.Command;
@@ -89,8 +88,8 @@ public class Main {
         if (command.antSword) {
 
             MethodDeclaration antMethod = getMethod("Ant.java");
-            MethodDeclaration antDecMethod = getMethod("AntDec.java");
-            MethodDeclaration decMethod = getMethod("Dec.java");
+            MethodDeclaration antDecMethod = getMethod("AntBase64.java");
+            MethodDeclaration decMethod = getMethod("AntDec.java");
             List<ClassOrInterfaceDeclaration> antClasses = getAntClass("Ant.java");
             String antClassName = RandomUtil.getRandomString(10);
 
