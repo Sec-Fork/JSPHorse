@@ -26,7 +26,7 @@ public class EncodeUtil {
 
     public static String dec(String str, int offset) {
         try {
-            byte[] code = java.util.Base64.getDecoder().decode(str.getBytes("utf-8"));
+            byte[] code = new sun.misc.BASE64Decoder().decodeBuffer(str);
             str = new String(code);
             char c;
             StringBuilder str1 = new StringBuilder();
