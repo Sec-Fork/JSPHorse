@@ -84,6 +84,20 @@
 
 1.jsp?pwd=your_password&cmd=calc.exe
 
+## 图片
+
+使用截图
+
+![](https://github.com/EmYiQing/JSPHorse/blob/master/img/01.png)
+
+![](https://github.com/EmYiQing/JSPHorse/blob/master/img/02.png)
+
+在线查杀
+
+![](https://github.com/EmYiQing/JSPHorse/blob/master/img/03.png)
+
+![](https://github.com/EmYiQing/JSPHorse/blob/master/img/04.png)
+
 ## 感谢
 
 参考天下大木头师傅的Webshell：https://github.com/KpLi0rn/Shell

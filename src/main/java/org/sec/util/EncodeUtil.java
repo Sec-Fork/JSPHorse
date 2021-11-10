@@ -2,6 +2,7 @@ package org.sec.util;
 
 import java.nio.charset.StandardCharsets;
 
+@SuppressWarnings("all")
 public class EncodeUtil {
     public static String encryption(String str, int offset) {
         char c;
