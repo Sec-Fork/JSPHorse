@@ -39,8 +39,12 @@ public class Application {
                 doJavaScript(command);
                 return;
             }
-            if (command.superModule) {
-                doSuper(command);
+            if (command.javacModule) {
+                doJavac(command);
+                return;
+            }
+            if (command.exprModule) {
+                doExpr(command);
                 return;
             }
             if (command.antSword) {
@@ -54,15 +58,19 @@ public class Application {
     }
 
     private static void base(Command command, String method) throws IOException {
-        MethodDeclaration jsMethod = getMethod(method);
+        MethodDeclaration newMethod = getMethod(method);
         MethodDeclaration decMethod = getMethod("Dec.java");
-        if (jsMethod == null || decMethod == null) {
+        if (newMethod == null || decMethod == null) {
             return;
         }
-        normalOperate(jsMethod);
+        normalOperate(newMethod);
         decCodeOperate(decMethod);
-        WriteUtil.write(jsMethod, decMethod, command.password, command.unicode);
+        WriteUtil.write(newMethod, decMethod, command.password, command.unicode);
         System.out.println("Finish!");
+    }
+
+    private static void doExpr(Command command) throws IOException {
+        base(command, "Beans.java");
     }
 
     private static void doJavaScript(Command command) throws IOException {
@@ -73,15 +81,15 @@ public class Application {
         base(command, "Base.java");
     }
 
-    private static void doSuper(Command command) throws IOException {
-        MethodDeclaration superMethod = getMethod("Javac.java");
+    private static void doJavac(Command command) throws IOException {
+        MethodDeclaration javacMethod = getMethod("Javac.java");
         MethodDeclaration decMethod = getMethod("Dec.java");
-        if (superMethod == null || decMethod == null) {
+        if (javacMethod == null || decMethod == null) {
             return;
         }
-        normalOperate(superMethod);
+        normalOperate(javacMethod);
         decCodeOperate(decMethod);
-        WriteUtil.writeSuper(superMethod, decMethod, command.password, command.unicode);
+        WriteUtil.writeJavac(javacMethod, decMethod, command.password, command.unicode);
         System.out.println("Finish!");
     }
 

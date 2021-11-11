@@ -15,8 +15,11 @@ public class Command {
     @Parameter(names = {"--js"},description = "Use JavaScript Engine")
     public boolean javascript;
 
-    @Parameter(names = {"--super"}, description = "Use Super Module")
-    public boolean superModule;
+    @Parameter(names = {"--javac"}, description = "Use Javac Module")
+    public boolean javacModule;
+
+    @Parameter(names = {"--expr"},description = "Use Expression Module")
+    public boolean exprModule;
 
     @Parameter(names = {"--ant"},description = "Use Ant Sword")
     public boolean antSword;
