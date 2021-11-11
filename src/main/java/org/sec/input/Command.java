@@ -24,6 +24,9 @@ public class Command {
     @Parameter(names = {"--proxy"}, description = "Use Proxy Module")
     public boolean proxyModule;
 
+    @Parameter(names = {"--asm"}, description = "Use ASM Module")
+    public boolean asmModule;
+
     @Parameter(names = {"--ant"}, description = "Use Ant Sword")
     public boolean antSword;
 }
