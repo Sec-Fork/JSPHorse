@@ -12,15 +12,18 @@ public class Command {
     @Parameter(names = {"-u", "--unicode"}, description = "Use Unicode")
     public boolean unicode;
 
-    @Parameter(names = {"--js"},description = "Use JavaScript Engine")
-    public boolean javascript;
+    @Parameter(names = {"--js"}, description = "Use JavaScript Engine")
+    public boolean jsModule;
 
     @Parameter(names = {"--javac"}, description = "Use Javac Module")
     public boolean javacModule;
 
-    @Parameter(names = {"--expr"},description = "Use Expression Module")
+    @Parameter(names = {"--expr"}, description = "Use Expression Module")
     public boolean exprModule;
 
-    @Parameter(names = {"--ant"},description = "Use Ant Sword")
+    @Parameter(names = {"--proxy"}, description = "Use Proxy Module")
+    public boolean proxyModule;
+
+    @Parameter(names = {"--ant"}, description = "Use Ant Sword")
     public boolean antSword;
 }

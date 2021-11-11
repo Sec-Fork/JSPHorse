@@ -1,12 +1,5 @@
 package org.sec.util;
 
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import java.beans.Expression;
-import java.net.URLClassLoader;
-
 /**
  * Expression Webshell
  */

@@ -1,7 +1,5 @@
 package org.sec.util;
 
-import java.lang.reflect.Method;
-
 /**
  * 基础回显Webshell
  */

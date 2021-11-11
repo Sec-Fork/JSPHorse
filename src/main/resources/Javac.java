@@ -1,15 +1,5 @@
 package org.sec.util;
 
-import javax.tools.*;
-import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Locale;
-import java.util.Random;
-
 /**
  * Javac动态编译免杀
  */

