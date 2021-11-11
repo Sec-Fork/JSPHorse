@@ -109,6 +109,8 @@
 
 参考三梦师傅的Webshell：https://github.com/threedr3am/JSP-Webshells
 
+参考su18师傅的`defineClass0`方式：https://github.com/su18
+
 ## 免责申明
 
 未经授权许可使用`JSPHorse`攻击目标是非法的
