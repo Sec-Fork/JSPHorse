@@ -9,7 +9,7 @@ public class Command {
     @Parameter(names = {"-p", "--password"}, description = "Webshell Password", required = true)
     public String password;
 
-    @Parameter(names = {"-o","--output"},description = "Output File")
+    @Parameter(names = {"-o", "--output"}, description = "Output File")
     public String output;
 
     @Parameter(names = {"-u", "--unicode"}, description = "Use Unicode")
@@ -24,11 +24,17 @@ public class Command {
     @Parameter(names = {"--expr"}, description = "Use Expression Module")
     public boolean exprModule;
 
+    @Parameter(names = {"--bcel"}, description = "Use BCEL Module")
+    public boolean bcelModule;
+
+    @Parameter(names = {"--bcel-asm"}, description = "Use BCEL ASM Module")
+    public boolean bcelAsmModule;
+
     @Parameter(names = {"--proxy"}, description = "Use Proxy Module")
     public boolean proxyModule;
 
-    @Parameter(names = {"--asm"}, description = "Use ASM Module")
-    public boolean asmModule;
+    @Parameter(names = {"--proxy-asm"}, description = "Use Proxy ASM Module")
+    public boolean proxyAsmModule;
 
     @Parameter(names = {"--ant"}, description = "Use Ant Sword")
     public boolean antSword;

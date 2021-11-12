@@ -27,11 +27,12 @@
 主要的免杀技术：
 
 - 基本的Java反射调用免杀
+- BCEL格式字节码反射加载免杀
 - ScriptEngine调用JS免杀
 - Javac动态编译class免杀
 - java.beans.Expression免杀
 - native方法defineClass0加载字节码免杀
-- ASM直接构造恶意字节码并加载执行免杀
+- ASM直接构造字节码(普通和BCEL)并加载执行免杀
 
 代码生成方式：
 
@@ -74,17 +75,25 @@
 
 `java -jar JSPHorse.jar -p your_password --expr`
 
-- 使用native方法加载字节码
+- 加载BCEL字节码免杀（动态构造字节码）
 
-注意：原理是JVM中注册类，不允许重复，所以这种马只能执行一次命令然后失效。但`JSPHorse`从字节码层面构造不同的类，如果想要多次执行只要重复生成多个马即可
+`java -jar JSPHorse.jar -p your_password --bcel`
+
+- 用ASM动态生成BCEL字节码免杀
+
+`java -jar JSPHorse.jar -p your_password --bcel-asm`
+
+- 使用Proxy类的native方法`defineClass0`加载字节码
+
+注意：原理是在JVM中注册类，不允许重复，所以这种马只能执行一次命令然后失效。但`JSPHorse`从字节码层面构造了不同的类，如果想要多次执行只要重复生成多个马即可
 
 `java -jar JSPHorse.jar -p your_password --proxy`
 
-- 使用JDK自带的ASM构造字节码并加载
+- 使用`defineClass0`加载ASM直接构造的字节码
 
 注意：原理同上，只能执行一次，但`JSPHorse`每次生产的类名不一致，可以重新生成来做多次执行
 
-`java -jar JSPHorse.jar -p your_password --asm`
+`java -jar JSPHorse.jar -p your_password --proxy-asm`
 
 - 任何一种方式加入`-u`参数进行Unicode编码（有时候有奇效）
 
