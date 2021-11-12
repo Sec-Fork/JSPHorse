@@ -31,7 +31,7 @@
 - Javac动态编译class免杀
 - java.beans.Expression免杀
 - native方法defineClass0加载字节码免杀
-- JDK自带的ASM直接构造恶意字节码并加载免杀
+- ASM直接构造恶意字节码并加载执行免杀
 
 代码生成方式：
 
