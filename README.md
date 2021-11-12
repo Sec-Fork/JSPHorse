@@ -4,6 +4,8 @@
 ![](https://img.shields.io/badge/JavaParser-3.23.1-blue)
 ![](https://img.shields.io/badge/Java-8-red)
 
+**工具仅用于安全研究以及内部自查，禁止使用工具发起非法攻击，造成的后果使用者负责**
+
 ## 简介
 
 一个JSP免杀Webshell生成器，主要支持普通回显Webshell，也实现了蚁剑的免杀
@@ -125,8 +127,8 @@
 
 ## 免责申明
 
-未经授权许可使用`JSPHorse`攻击目标是非法的
+**未经授权许可使用`JSPHorse`攻击目标是非法的**
 
-本程序应仅用于授权的安全测试与研究目的
+**本程序应仅用于授权的安全测试与研究目的**
 
 
