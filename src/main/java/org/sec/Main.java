@@ -1,5 +1,7 @@
 package org.sec;
 
+import org.apache.log4j.Logger;
+import org.sec.input.Logo;
 import org.sec.start.Application;
 
 //                          _ooOoo_
@@ -33,7 +35,12 @@ import org.sec.start.Application;
 //                别人笑我忒疯癫，我笑自己命太贱；
 //                不见满街漂亮妹，哪个归得程序员？
 public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class);
+
     public static void main(String[] args) {
+        Logo.PrintLogo();
+        logger.info("start jsp horse application");
+        logger.info("please wait 30 second...");
         Application.start(args);
     }
 }

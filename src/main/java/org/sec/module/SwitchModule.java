@@ -8,13 +8,17 @@ import com.github.javaparser.ast.expr.IntegerLiteralExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.stmt.SwitchEntry;
 import com.github.javaparser.ast.stmt.SwitchStmt;
+import org.apache.log4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class SwitchModule {
+    private static final Logger logger = Logger.getLogger(SwitchModule.class);
+
     public static void changeSwitch(MethodDeclaration method, String target) {
+        logger.info("change switch statements order");
         String[] a = target.split("\\|");
         SwitchStmt stmt = method.findFirst(SwitchStmt.class).isPresent() ?
                 method.findFirst(SwitchStmt.class).get() : null;
@@ -35,6 +39,7 @@ public class SwitchModule {
     }
 
     public static String shuffle(MethodDeclaration method) {
+        logger.info("shuffle dispenser and switch cases");
         Random rand = new Random();
         String result = null;
         rand.setSeed(System.currentTimeMillis());

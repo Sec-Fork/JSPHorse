@@ -9,6 +9,9 @@ public class Command {
     @Parameter(names = {"-p", "--password"}, description = "Webshell Password", required = true)
     public String password;
 
+    @Parameter(names = {"-o","--output"},description = "Output File")
+    public String output;
+
     @Parameter(names = {"-u", "--unicode"}, description = "Use Unicode")
     public boolean unicode;
 

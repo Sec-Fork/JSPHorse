@@ -6,16 +6,21 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.BinaryExpr;
 import com.github.javaparser.ast.expr.EnclosedExpr;
 import com.github.javaparser.ast.expr.IntegerLiteralExpr;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Random;
 
 public class XORModule {
+    private static final Logger logger = Logger.getLogger(XORModule.class);
+
     public static void doXOR(MethodDeclaration method) {
+        logger.info("do integer xor operate in method");
         doCallableXOR(method);
     }
 
     public static void doXORForConstruct(ConstructorDeclaration cd) {
+        logger.info("do integer xor operate in constructor");
         doCallableXOR(cd);
     }
 

@@ -1,5 +1,6 @@
 package org.sec.core;
 
+import org.apache.log4j.Logger;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Label;
@@ -7,8 +8,10 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 public class ByteCodeEvilDump implements Opcodes {
+    private static final Logger logger = Logger.getLogger(ByteCodeEvilDump.class);
 
     public static byte[] dump (String name) {
+        logger.info("generate new bytecode");
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         FieldVisitor fieldVisitor;
         MethodVisitor methodVisitor;

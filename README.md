@@ -89,6 +89,10 @@
 
 `java -jar JSPHorse.jar -p your_password --expr -u`
 
+- 使用`-o`指定输出文件，默认输出到`result.jsp`
+
+`java -jar JSPHorse.jar -p your_password -o 1.jsp`
+
 - 如何使用
 
 1. 普通情况：`1.jsp?pwd=your_password&cmd=ipconfig`
