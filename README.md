@@ -8,6 +8,8 @@
 
 一个JSP免杀Webshell生成器，主要支持普通回显Webshell，也实现了蚁剑的免杀
 
+生成代码技术基于AST库`JavaParser`和字节码操作框架`ASM`
+
 ```txt
 　　 へ　　　　　／|
 　　/＼7　　　 ∠＿/
@@ -85,13 +87,17 @@
 
 - 使用Proxy类的native方法`defineClass0`加载字节码
 
-注意：原理是在JVM中注册类，不允许重复，所以这种马只能执行一次命令然后失效。但`JSPHorse`从字节码层面构造了不同的类，如果想要多次执行只要重复生成多个马即可
+注意：原理是在JVM中注册类，不允许重复，所以这种马只能执行一次命令然后失效
+
+但`JSPHorse`从字节码层面构造了不同的类，如果想要多次执行只要重复生成多个马即可
 
 `java -jar JSPHorse.jar -p your_password --proxy`
 
 - 使用`defineClass0`加载ASM直接构造的字节码
 
-注意：原理同上，只能执行一次，但`JSPHorse`每次生产的类名不一致，可以重新生成来做多次执行
+注意：原理同上，只能执行一次
+
+但`JSPHorse`每次生成的类名不一致，可以重新生成来做多次执行
 
 `java -jar JSPHorse.jar -p your_password --proxy-asm`
 
