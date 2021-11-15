@@ -6,7 +6,7 @@ public class RandomUtil {
     public static String getRandomString(int length) {
         try {
             // Sleep保证随机
-            Thread.sleep(1000);
+            Thread.sleep(300);
             String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             Random random = new Random();
             random.setSeed(System.currentTimeMillis());

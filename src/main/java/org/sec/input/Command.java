@@ -30,6 +30,12 @@ public class Command {
     @Parameter(names = {"--bcel-asm"}, description = "Use BCEL ASM Module")
     public boolean bcelAsmModule;
 
+    @Parameter(names = {"--classloader"}, description = "Use ClassLoader Module")
+    public boolean classLoaderModule;
+
+    @Parameter(names = {"--classloader-asm"}, description = "Use ClassLoader ASM Module")
+    public boolean classLoaderAsmModule;
+
     @Parameter(names = {"--proxy"}, description = "Use Proxy Module")
     public boolean proxyModule;
 

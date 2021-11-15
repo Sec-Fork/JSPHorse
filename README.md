@@ -35,6 +35,7 @@
 - ScriptEngine调用JS免杀
 - Javac动态编译class免杀
 - java.beans.Expression免杀
+- 自定义ClassLoader加载字节码免杀
 - native方法defineClass0加载字节码免杀
 - ASM直接构造字节码(普通和BCEL)并加载执行免杀
 
@@ -78,6 +79,14 @@
 - 使用Expression免杀
 
 `java -jar JSPHorse.jar -p your_password --expr`
+
+- 使用自定义ClassLoader加载字节码
+
+`java -jar JSPHorse.jar -p your_password --classloader`
+
+- 用ASM动态生成字节码使用自定义ClassLoader加载
+
+`java -jar JSPHorse.jar -p your_password --classloader-asm`
 
 - 加载BCEL字节码免杀（动态构造字节码）
 
