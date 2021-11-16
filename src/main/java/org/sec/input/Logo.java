@@ -15,5 +15,6 @@ public class Logo {
                 "　 ヽ_ﾉ　　(_／　 │／／\n" +
                 "　　7　　　　　　　|／\n" +
                 "　　＞―r￣￣~∠--|");
+        System.out.println("A JSP Webshell Generator By 4ra1n");
     }
 }

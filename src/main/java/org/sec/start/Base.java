@@ -5,6 +5,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import org.apache.log4j.Logger;
 import org.sec.Main;
@@ -41,7 +42,7 @@ public class Base {
         return unit.findAll(ClassOrInterfaceDeclaration.class);
     }
 
-    protected static void normalOperate(MethodDeclaration method) {
+    protected static void normalOperate(MethodDeclaration method, String newDecName) {
         String newValue = SwitchModule.shuffle(method);
         SwitchModule.changeSwitch(method, newValue);
         int offset = StringModule.encodeString(method);
@@ -49,13 +50,21 @@ public class Base {
         IdentifyModule.doIdentify(method);
         XORModule.doXOR(method);
         XORModule.doXOR(method);
+        method.findAll(MethodCallExpr.class).forEach(mce -> {
+            if (mce.getNameAsString().equals("dec")) {
+                mce.setName(newDecName);
+            }
+        });
     }
 
-    protected static void decCodeOperate(MethodDeclaration decMethod) {
+    protected static String decCodeOperate(MethodDeclaration decMethod) {
         int decOffset = StringModule.encodeString(decMethod);
         StringModule.changeRef(decMethod, decOffset);
         IdentifyModule.doIdentify(decMethod);
         XORModule.doXOR(decMethod);
+        String newName = RandomUtil.getRandomString(10);
+        decMethod.setName(newName);
+        return newName;
     }
 
     protected static void base(Command command, String method) throws IOException {
@@ -66,8 +75,8 @@ public class Base {
         if (newMethod == null || decMethod == null) {
             return;
         }
-        normalOperate(newMethod);
-        decCodeOperate(decMethod);
+        String newDecName = decCodeOperate(decMethod);
+        normalOperate(newMethod, newDecName);
         WriteUtil.write(newMethod, decMethod, command.password, command.unicode, command.output);
         logger.info("finish");
     }
@@ -94,8 +103,8 @@ public class Base {
                 sles.get(3).setValue(newName);
             }
         }
-        normalOperate(newMethod);
-        decCodeOperate(decMethod);
+        String newDecName = decCodeOperate(decMethod);
+        normalOperate(newMethod, newDecName);
         WriteUtil.write(newMethod, decMethod, command.password, command.unicode, command.output);
         logger.info("finish");
     }
@@ -131,8 +140,8 @@ public class Base {
                 }
             }
         }
-        normalOperate(clMethod);
-        decCodeOperate(decMethod);
+        String newDecName = decCodeOperate(decMethod);
+        normalOperate(clMethod, newDecName);
         WriteUtil.write(clMethod, decMethod, command.password, command.unicode, command.output);
         logger.info("finish");
     }

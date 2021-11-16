@@ -65,7 +65,7 @@ public class JSPHorseTest {
         Command command = new Command();
         command.password = "4ra1n";
         command.classLoaderAsmModule = true;
-        command.output = "cl-asm.jsp";
+        command.output = "cl-proxyasm.jsp";
         Application.doClassLoaderAsm(command);
     }
 
@@ -83,7 +83,7 @@ public class JSPHorseTest {
         Command command = new Command();
         command.password = "4ra1n";
         command.bcelAsmModule = true;
-        command.output = "bcel-asm.jsp";
+        command.output = "bcel-proxyasm.jsp";
         Application.doBcelAsm(command);
     }
 
@@ -101,7 +101,7 @@ public class JSPHorseTest {
         Command command = new Command();
         command.password = "4ra1n";
         command.proxyAsmModule = true;
-        command.output = "proxy-asm.jsp";
+        command.output = "proxy-proxyasm.jsp";
         Application.doProxyAsm(command);
     }
 
@@ -110,7 +110,7 @@ public class JSPHorseTest {
         Command command = new Command();
         command.password = "4ra1n";
         command.proxyAsmModule = true;
-        command.output = "proxy-asm.jsp";
+        command.output = "proxy-proxyasm.jsp";
         command.unicode = true;
         Application.doProxyAsm(command);
     }

