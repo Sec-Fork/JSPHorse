@@ -12,6 +12,8 @@
 
 生成代码技术基于AST库`JavaParser`和字节码操作框架`ASM`
 
+具体的原理参考先知社区文章：https://xz.aliyun.com/t/10507
+
 ```txt
 　　 へ　　　　　／|
 　　/＼7　　　 ∠＿/
